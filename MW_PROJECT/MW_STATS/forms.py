@@ -13,4 +13,8 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('gamertag', 'username', 'password1', 'password2', )
-        
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=30, label=False, widget=forms.TextInput(attrs={'placeholder': 'Username', 'autofocus': 'autofocus'}))
+    password = forms.CharField(label=False, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))

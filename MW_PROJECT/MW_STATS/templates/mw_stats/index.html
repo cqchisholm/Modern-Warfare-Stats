@@ -15,8 +15,10 @@
 
 
 {% block body %}
-    
-    {% if not user.is_athenticated %}
+
+    {% if user.is_authenticated %}
+        <p class="fw-light fs-4">Signed in as <strong>{{ gamertag }}</strong></p>
+    {% else %}
         <p class="fw-light fs-4">Please <b>Register</b> or <b>Sign In</b> using the links above.</p>
     {% endif %}
 
