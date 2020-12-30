@@ -3,17 +3,21 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import requests
+from .helpers import *
 from .forms import LoginForm, RegisterForm
 from .models import User, Profile
 
 
 def index(request):
+    # if user is signed in
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
         gamertag = profile.gamertag
         return render(request, 'mw_stats/index.html', {
             'gamertag': gamertag
         })
+    # if no user is signed in
     else:
         return render(request, 'mw_stats/index.html')
 
@@ -81,3 +85,54 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required
+def warzone(request):
+    # get the gamertag of the signed in user via the Profile
+    profile = Profile.objects.filter(user=request.user).first()
+    gamertag = profile.gamertag
+
+    # get the API response for warzone stats
+    url = "https://call-of-duty-modern-warfare.p.rapidapi.com/warzone/{}/xbl".format(gamertag)
+    headers = {
+    'x-rapidapi-key': "206fdfeafcmsh70f2e07b4f4d6e0p136146jsn19dcf2a2f09e",
+    'x-rapidapi-host': "call-of-duty-modern-warfare.p.rapidapi.com"
+    }
+    response = requests.request('GET', url, headers=headers)
+    wz_stats = response.json()
+
+    # certain stats that need special attention (commas, decimal places, etc.)
+    kd = round(wz_stats['br']['kdRatio'], 3)
+    downs = add_commas(wz_stats['br']['downs'])
+    top25 = add_commas(wz_stats['br']['topTwentyFive'])
+    kills = add_commas(wz_stats['br']['kills'])
+    deaths = add_commas(wz_stats['br']['deaths'])
+    games_played = add_commas(wz_stats['br']['gamesPlayed'])
+    wins = add_commas(wz_stats['br']['wins'])
+    win_percentage = round(wz_stats['br']['wins'] / wz_stats['br']['gamesPlayed'] * 100, 2)
+    top5_percentage = round(wz_stats['br']['topFive'] / wz_stats['br']['gamesPlayed'] * 100, 2)
+    top5 = add_commas(wz_stats['br']['topFive'])
+    top10 = add_commas(wz_stats['br']['topTen'])
+    top25 = add_commas(wz_stats['br']['topTwentyFive'])
+    revives = add_commas(wz_stats['br']['revives'])
+
+
+
+    
+    return render(request, 'mw_stats/warzone.html', {
+        'gamertag': gamertag,
+        'kd': kd,
+        'downs': downs,
+        'wins': wins,
+        'top25': top25,
+        'kills': kills,
+        'deaths': deaths,
+        'games_played': games_played,
+        'win_percentage': win_percentage,
+        'top5_percentage': top5_percentage,
+        'top5': top5,
+        'top10': top10,
+        'top25': top25,
+        'revives': revives
+    })

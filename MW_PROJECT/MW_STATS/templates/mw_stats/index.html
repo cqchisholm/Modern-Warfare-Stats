@@ -4,7 +4,7 @@
 
 {% block links %}
     {% if user.is_authenticated %}
-        <a class="nav-link" href="">Warzone</a>
+        <a class="nav-link" href="{% url 'warzone' %}">Warzone</a>
         <a class="nav-link" href="">Multiplayer</a>
         <a class="nav-link" href="">Private</a>
         <a class="nav-link" href="">History</a>
