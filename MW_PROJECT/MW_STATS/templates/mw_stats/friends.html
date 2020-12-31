@@ -1,0 +1,25 @@
+{% extends 'mw_stats/layout.html' %}
+
+{% block title %} Compare {% endblock %}
+
+{% block links %}
+    <a class="nav-link" href="{% url 'warzone' %}">Warzone</a>
+    <a class="nav-link" href="">Multiplayer</a>
+    <a class="nav-link" href="">Private</a>
+    <a class="nav-link" href="">History</a>
+{% endblock %}
+
+
+{% block body %}
+    {% load crispy_forms_tags %}
+
+    <p class="fw-light fs-4">Enter up to four Gamertags to compare your stats against.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-divide">{{ form.gamertag1|as_crispy_field }}</div>
+        <div class="form-divide">{{ form.gamertag2|as_crispy_field }}</div>
+        <div class="form-divide">{{ form.gamertag3|as_crispy_field }}</div>
+        <div class="form-divide">{{ form.gamertag4|as_crispy_field }}</div>
+    </form>
+
+{% endblock %}

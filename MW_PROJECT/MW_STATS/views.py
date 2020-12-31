@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import requests
 from .helpers import *
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, FriendsForm
 from .models import User, Profile
 
 
@@ -102,7 +102,7 @@ def warzone(request):
     response = requests.request('GET', url, headers=headers)
     wz_stats = response.json()
 
-    # certain stats that need special attention (commas, decimal places, etc.)
+    # all warzone stats
     kd = round(wz_stats['br']['kdRatio'], 3)
     downs = add_commas(wz_stats['br']['downs'])
     top25 = add_commas(wz_stats['br']['topTwentyFive'])
@@ -117,9 +117,6 @@ def warzone(request):
     top25 = add_commas(wz_stats['br']['topTwentyFive'])
     revives = add_commas(wz_stats['br']['revives'])
 
-
-
-    
     return render(request, 'mw_stats/warzone.html', {
         'gamertag': gamertag,
         'kd': kd,
@@ -135,4 +132,17 @@ def warzone(request):
         'top10': top10,
         'top25': top25,
         'revives': revives
+    })
+
+
+@login_required
+def friends(request):
+    form = FriendsForm()
+    if request.method == 'POST':
+        return render(request, 'mw_stats/friends.html', {
+            'form': form
+        })
+    # if method == GET
+    return render(request, 'mw_stats/friends.html', {
+        'form': form
     })

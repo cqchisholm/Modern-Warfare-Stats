@@ -7,3 +7,8 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE)
     gamertag = models.CharField(max_length=30)
+
+
+class Friends(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=CASCADE)
+    friend = models.CharField(max_length=30)
