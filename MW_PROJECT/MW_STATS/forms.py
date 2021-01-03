@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import fields
+from django.forms.models import ModelForm
 from .models import Friends, User, Profile
 from django.contrib.auth.forms import UserCreationForm
 
@@ -19,8 +21,14 @@ class LoginForm(forms.Form):
     password = forms.CharField(label=False, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
-class FriendsForm(forms.Form):
-    gamertag1 = forms.CharField(max_length=30, label='Gamertag 1', widget=forms.TextInput(attrs={'placeholder': 'Gamertag', 'autofocus': 'autofocus'}))
-    gamertag2 = forms.CharField(max_length=30, label='Gamertag 2', widget=forms.TextInput(attrs={'placeholder': 'Gamertag'}))
-    gamertag3 = forms.CharField(max_length=30, label=False, widget=forms.TextInput(attrs={'placeholder': 'Gamertag'}))
-    gamertag4 = forms.CharField(max_length=30, label=False, widget=forms.TextInput(attrs={'placeholder': 'Gamertag'}))
+class FriendsForm(ModelForm):
+    class Meta:
+        model = Friends
+        fields = ['gamertag1', 'gamertag2', 'gamertag3', 'gamertag4', 'gamertag5']
+        labels = {
+            'gamertag1': 'Gamertag 1',
+            'gamertag2': 'Gamertag 2',
+            'gamertag3': 'Gamertag 3',
+            'gamertag4': 'Gamertag 4',
+            'gamertag5': 'Gamertag 5'
+        }

@@ -11,4 +11,8 @@ class Profile(models.Model):
 
 class Friends(models.Model):
     profile = models.ForeignKey(Profile, on_delete=CASCADE)
-    friend = models.CharField(max_length=30)
+    gamertag1 = models.CharField(max_length=30, blank=True)
+    gamertag2 = models.CharField(max_length=30, blank=True)
+    gamertag3 = models.CharField(max_length=30, blank=True)
+    gamertag4 = models.CharField(max_length=30, blank=True)
+    gamertag5 = models.CharField(max_length=30, blank=True)
