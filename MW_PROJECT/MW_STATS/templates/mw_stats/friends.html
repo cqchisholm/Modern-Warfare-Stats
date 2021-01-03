@@ -13,13 +13,13 @@
 {% block body %}
     {% load crispy_forms_tags %}
 
-    <p class="fw-light fs-4">Enter up to four Gamertags to compare your stats against.</p>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-divide">{{ form.gamertag1|as_crispy_field }}</div>
-        <div class="form-divide">{{ form.gamertag2|as_crispy_field }}</div>
-        <div class="form-divide">{{ form.gamertag3|as_crispy_field }}</div>
-        <div class="form-divide">{{ form.gamertag4|as_crispy_field }}</div>
-    </form>
+    <div class="col-md-6 offset-md-3">
+        <p class="fw-light fs-4">Enter up to four Gamertags to compare your stats against.</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
 
 {% endblock %}
