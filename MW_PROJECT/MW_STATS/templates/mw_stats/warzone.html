@@ -11,44 +11,45 @@
 
 
 {% block body %}
-    <h2>{{ gamertag }}'s Warzone Stats</h2>
-    <p></p>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th></th>
-                <th>Win %</th>
-                <th>Top 5 %</th>
-                <th>Wins</th>
-                <th>Top 5</th>
-                <th>Top 10</th>
-                <th>Top 25</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>K/D</th>
-                <th>Revives</th>
-                <th>Games Played</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ gamertag }}</td>
-                <td>{{ win_percentage }}%</td>
-                <td>{{ top5_percentage }}%</td>
-                <td>{{ wins }}</td>
-                <td>{{ top5 }}</td>
-                <td>{{ top10 }}</td>
-                <td>{{ top25 }}</td>
-                <td>{{ kills }}</td>
-                <td>{{ deaths }}</td>
-                <td>{{ kd }}</td>
-                <td>{{ revives }}</td>
-                <td>{{ games_played }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <main class="container p-5">
+        <h2>{{ gamertag }}'s Warzone Stats</h2>
+        <p></p>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th></th>
+                    <th>Win %</th>
+                    <th>Top 5 %</th>
+                    <th>Wins</th>
+                    <th>Top 5</th>
+                    <th>Top 10</th>
+                    <th>Top 25</th>
+                    <th>Kills</th>
+                    <th>Deaths</th>
+                    <th>K/D</th>
+                    <th>Revives</th>
+                    <th>Games Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ gamertag }}</td>
+                    <td>{{ win_percentage }}%</td>
+                    <td>{{ top5_percentage }}%</td>
+                    <td>{{ wins }}</td>
+                    <td>{{ top5 }}</td>
+                    <td>{{ top10 }}</td>
+                    <td>{{ top25 }}</td>
+                    <td>{{ kills }}</td>
+                    <td>{{ deaths }}</td>
+                    <td>{{ kd }}</td>
+                    <td>{{ revives }}</td>
+                    <td>{{ games_played }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{% url 'friends' %}" class="btn btn-primary">Compare with friends</a>
-
+        <a href="{% url 'friends' %}" class="btn btn-secondary">Compare with friends</a>
+    </main>
 
 {% endblock %}

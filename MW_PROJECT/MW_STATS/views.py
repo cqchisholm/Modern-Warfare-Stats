@@ -137,12 +137,10 @@ def warzone(request):
 
 @login_required
 def friends(request):
-    form = FriendsForm()
     if request.method == 'POST':
-        return render(request, 'mw_stats/friends.html', {
-            'form': form
-        })
+        # REMOVE THE BELOW. THIS IS JUST FOR TEST.
+        return HttpResponseRedirect(reverse('index'))
     # if method == GET
     return render(request, 'mw_stats/friends.html', {
-        'form': form
+        'form': FriendsForm()
     })

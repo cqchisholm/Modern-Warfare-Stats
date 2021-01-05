@@ -25,10 +25,17 @@ class FriendsForm(ModelForm):
     class Meta:
         model = Friends
         fields = ['gamertag1', 'gamertag2', 'gamertag3', 'gamertag4', 'gamertag5']
+        widgets = {
+            'gamertag1': forms.TextInput(attrs={'placeholder': 'Gamertag 1'}),
+            'gamertag2': forms.TextInput(attrs={'placeholder': 'Gamertag 2'}),
+            'gamertag3': forms.TextInput(attrs={'placeholder': 'Gamertag 3'}),
+            'gamertag4': forms.TextInput(attrs={'placeholder': 'Gamertag 4'}),
+            'gamertag5': forms.TextInput(attrs={'placeholder': 'Gamertag 5'})
+        }
         labels = {
             'gamertag1': 'Gamertag 1',
             'gamertag2': 'Gamertag 2',
             'gamertag3': 'Gamertag 3',
-            'gamertag4': 'Gamertag 4',
-            'gamertag5': 'Gamertag 5'
+            'gamertag4': '',
+            'gamertag5': ''
         }

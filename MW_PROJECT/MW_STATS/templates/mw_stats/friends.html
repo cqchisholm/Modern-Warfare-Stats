@@ -15,10 +15,14 @@
 
     <div class="col-md-6 offset-md-3">
         <p class="fw-light fs-4">Enter up to four Gamertags to compare your stats against.</p>
-        <form method="POST">
+        <form action="{% url 'friends' %}" method="POST">
             {% csrf_token %}
-            {{ form|crispy }}
-            <input type="submit" class="btn btn-primary">
+            <div class="form-divide col-sm-6">{{ form.gamertag1|as_crispy_field }}</div>
+            <div class="form-divide col-sm-6">{{ form.gamertag2|as_crispy_field }}</div>
+            <div class="form-divide col-sm-6">{{ form.gamertag3|as_crispy_field }}</div>
+            <div class="form-divide col-sm-6">{{ form.gamertag4|as_crispy_field }}</div>
+            <div class="form-divide-extra col-sm-6">{{ form.gamertag5|as_crispy_field }}</div>
+            <input type="submit" class="btn btn-secondary">
         </form>
     </div>
 
