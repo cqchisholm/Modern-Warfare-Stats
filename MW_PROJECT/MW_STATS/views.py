@@ -93,14 +93,15 @@ def warzone(request):
     profile = Profile.objects.filter(user=request.user).first()
     gamertag = profile.gamertag
 
-    # get the API response for warzone stats
-    url = "https://call-of-duty-modern-warfare.p.rapidapi.com/warzone/{}/xbl".format(gamertag)
+    # get the API response for warzone stats for the user
+    url_user = "https://call-of-duty-modern-warfare.p.rapidapi.com/warzone/{}/xbl".format(gamertag)
     headers = {
     'x-rapidapi-key': "206fdfeafcmsh70f2e07b4f4d6e0p136146jsn19dcf2a2f09e",
     'x-rapidapi-host': "call-of-duty-modern-warfare.p.rapidapi.com"
     }
-    response = requests.request('GET', url, headers=headers)
-    wz_stats = response.json()
+    # Response for user
+    response_user = requests.request('GET', url_user, headers=headers)
+    wz_stats = response_user.json()
 
     # all warzone stats
     kd = round(wz_stats['br']['kdRatio'], 3)
@@ -116,6 +117,12 @@ def warzone(request):
     top10 = add_commas(wz_stats['br']['topTen'])
     top25 = add_commas(wz_stats['br']['topTwentyFive'])
     revives = add_commas(wz_stats['br']['revives'])
+
+    #############################################################################
+    # All same info above but for all friends added for that user to compare with
+
+
+
 
     return render(request, 'mw_stats/warzone.html', {
         'gamertag': gamertag,
