@@ -10,7 +10,7 @@ class Profile(models.Model):
 
 
 class Friends(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=CASCADE)
+    user = models.OneToOneField(User, on_delete=CASCADE)
     gamertag1 = models.CharField(max_length=30, blank=True)
     gamertag2 = models.CharField(max_length=30, blank=True)
     gamertag3 = models.CharField(max_length=30, blank=True)

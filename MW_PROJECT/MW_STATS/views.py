@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 from .helpers import *
 from .forms import LoginForm, RegisterForm, FriendsForm
-from .models import User, Profile
+from .models import Friends, User, Profile
 
 
 def index(request):
@@ -138,8 +138,23 @@ def warzone(request):
 @login_required
 def friends(request):
     if request.method == 'POST':
-        # REMOVE THE BELOW. THIS IS JUST FOR TEST.
-        return HttpResponseRedirect(reverse('index'))
+        form = FriendsForm(request.POST)
+        if form.is_valid():
+            friends = Friends()
+            friends.user = request.user
+            friends.gamertag1 = form.cleaned_data['gamertag1']
+            friends.gamertag2 = form.cleaned_data['gamertag2']
+            friends.gamertag3 = form.cleaned_data['gamertag3']
+            friends.gamertag4 = form.cleaned_data['gamertag4']
+            friends.gamertag5 = form.cleaned_data['gamertag5']
+            friends.save()
+            return HttpResponseRedirect(reverse('warzone'))
+        else:
+            return render(request, 'mw_stats/friends.html', {
+                'form': FriendsForm(),
+                'message': 'DID NOT WORK FOR SOME REASON'
+            })
+
     # if method == GET
     return render(request, 'mw_stats/friends.html', {
         'form': FriendsForm()
