@@ -46,25 +46,23 @@
                     <td>{{ revives }}</td>
                     <td>{{ games_played }}</td>
                 </tr>
-            </tbody>
-            {% for friend in friends %}
-            <tbody>
+            {% for friend in wz_stats_F %}
                 <tr>
-                    <td>{{ gamertag }}</td>
-                    <td>{{ win_percentage }}%</td>
-                    <td>{{ top5_percentage }}%</td>
-                    <td>{{ wins }}</td>
-                    <td>{{ top5 }}</td>
-                    <td>{{ top10 }}</td>
-                    <td>{{ top25 }}</td>
-                    <td>{{ kills }}</td>
-                    <td>{{ deaths }}</td>
-                    <td>{{ kd }}</td>
-                    <td>{{ revives }}</td>
-                    <td>{{ games_played }}</td>
+                    <td>{{ friend.0 }}</td>
+                    <td>{{ friend.1 }}%</td>
+                    <td>{{ friend.2 }}%</td>
+                    <td>{{ friend.3 }}</td>
+                    <td>{{ friend.4 }}</td>
+                    <td>{{ friend.5 }}</td>
+                    <td>{{ friend.6 }}</td>
+                    <td>{{ friend.7 }}</td>
+                    <td>{{ friend.8 }}</td>
+                    <td>{{ friend.9 }}</td>
+                    <td>{{ friend.10 }}</td>
+                    <td>{{ friend.11 }}</td>
                 </tr>
-            </tbody>
             {% endfor %}
+            </tbody>
         </table>
 
         <a href="{% url 'friends' %}" class="btn btn-secondary">Compare with friends</a>
