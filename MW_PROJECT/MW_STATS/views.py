@@ -229,6 +229,9 @@ def history(request):
     response = requests.request('GET', url_user, headers=headers)
     history_stats = response.json()
 
+    # special cases needed
+    kd = round(history_stats['summary']['all']['kdRatio'], 3)
+
     sleep(1) # sleep to avoid API calls/sec error
 
     # using functions in 'helpers' - finding the avergae palcement, best finish, most kills over the last 20 games
@@ -252,17 +255,21 @@ def history(request):
             avg_placement_friend = avg_placement(history_stats_friends)
             best_placement_friend = best_placement(history_stats_friends)
             most_kills_friend = most_kills(history_stats_friends)
+            kd = round(history_stats_friends['summary']['all']['kdRatio'], 3)
+            kills_per_game = (history_stats_friends['summary']['all']['kills'] / 20)
 
-            stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends])
+            stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends, kd])
             wz_stats_friends.append(stats_list_friends)
-            print(wz_stats_friends)
         else:
             continue
-        return render(request, 'mw_stats/history.html', {
-            'gamertag': gamertag,
-            'friends_list': friends_list,
-            'avg_placement_user': avg_placement_user,
-            'best_placement_user': best_placement_user,
-            'most_kills_user': most_kills_user,
-            'wz_stats_friends': wz_stats_friends
-        })
+        
+    return render(request, 'mw_stats/history.html', {
+        'gamertag': gamertag,
+        'history_stats': history_stats,
+        'friends_list': friends_list,
+        'avg_placement_user': avg_placement_user,
+        'best_placement_user': best_placement_user,
+        'most_kills_user': most_kills_user,
+        'kd': kd,
+        'wz_stats_friends': wz_stats_friends
+    })

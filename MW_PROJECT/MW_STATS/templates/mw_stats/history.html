@@ -36,13 +36,13 @@
                     <td>{{ avg_placement_user }}</td>
                     <td>{{ best_placement_user }}</td>
                     <td>{{ most_kills_user }}</td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
+                    <td>{{ history_stats.summary.all.kills }}</td>
+                    <td>{{ history_stats.summary.all.deaths }}</td>
+                    <td>{{ kd }}</td>
+                    <td>{{ history_stats.summary.all.killsPerGame }}</td>
+                    <td>{{ history_stats.summary.all.gulagKills }}</td>
+                    <td>{{ history_stats.summary.all.gulagDeaths }}</td>
+                    <td>{{ history_stats.summary.all.objectiveReviver }}</td>
                 </tr>
                 {% for friend in wz_stats_friends %}
                 <tr>
@@ -50,13 +50,13 @@
                     <td>{{ friend.1 }}</td>
                     <td>{{ friend.2 }}</td>
                     <td>{{ friend.3 }}</td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
-                    <td>  </td>
+                    <td>{{ friend.4.summary.all.kills }}</td>
+                    <td>{{ friend.4.summary.all.deaths }}</td>
+                    <td>{{ friend.5 }}</td>
+                    <td>{{ friend.4.summary.all.killsPerGame }}</td>
+                    <td>{{ friend.4.summary.all.gulagKills }}</td>
+                    <td>{{ friend.4.summary.all.gulagDeaths }}</td>
+                    <td>{{friend.4.summary.all.objectiveReviver }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

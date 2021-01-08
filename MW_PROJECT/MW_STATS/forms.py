@@ -29,7 +29,6 @@ class FriendsForm(ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-6'
-        # the below doesn't work too well
         self.helper.layout = Layout(
             Field('gamertag1', css_class='form-divide'),
             Field('gamertag2', css_class='form-divide'),
@@ -44,11 +43,11 @@ class FriendsForm(ModelForm):
         model = Friends
         fields = ['gamertag1', 'gamertag2', 'gamertag3', 'gamertag4', 'gamertag5']
         labels = {
-            'gamertag1': 'Gamertag 1',
-            'gamertag2': 'Gamertag 2',
-            'gamertag3': 'Gamertag 3',
-            'gamertag4': 'Gamertag 4',
-            'gamertag5': 'Gamertag 5'
+            'gamertag1': 'Gamertag 1:',
+            'gamertag2': 'Gamertag 2:',
+            'gamertag3': 'Gamertag 3:',
+            'gamertag4': 'Gamertag 4:',
+            'gamertag5': 'Gamertag 5:'
         }
         widgets = {
             'gamertag1': forms.TextInput(attrs={
