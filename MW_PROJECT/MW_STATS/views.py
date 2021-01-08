@@ -166,7 +166,7 @@ def warzone(request):
             sleep(1) # Sleep for 1 second to avoid API calls/sec error
         else:
             continue
-        
+
     return render(request, 'mw_stats/warzone.html', {
         'gamertag': gamertag,
         'kd': kd,
@@ -212,3 +212,57 @@ def friends(request):
     return render(request, 'mw_stats/friends.html', {
         'form': FriendsForm()
     })
+
+
+@login_required
+def history(request):
+    # get the gamertag of the signed in user via the Profile
+    profile = Profile.objects.filter(user=request.user).first()
+    gamertag = profile.gamertag
+
+    # get hgistory stats from API
+    url_user = "https://call-of-duty-modern-warfare.p.rapidapi.com/warzone-matches/{}/xbl".format(gamertag)
+    headers = {
+        'x-rapidapi-host': "call-of-duty-modern-warfare.p.rapidapi.com",
+        'x-rapidapi-key': "206fdfeafcmsh70f2e07b4f4d6e0p136146jsn19dcf2a2f09e"
+        }
+    response = requests.request('GET', url_user, headers=headers)
+    history_stats = response.json()
+
+    sleep(1) # sleep to avoid API calls/sec error
+
+    # using functions in 'helpers' - finding the avergae palcement, best finish, most kills over the last 20 games
+    avg_placement_user = avg_placement(history_stats)
+    best_placement_user = best_placement(history_stats)
+    most_kills_user = most_kills(history_stats)
+
+    # get list of friends of the user
+    friends = Friends.objects.filter(user=request.user).first()
+    friends_list = [friends.gamertag1, friends.gamertag2, friends.gamertag3, friends.gamertag4, friends.gamertag5]
+
+    # get history stats for all friends
+    wz_stats_friends = []
+    for friend in friends_list:
+        stats_list_friends = []
+        if friend != '':
+            url_friend = "https://call-of-duty-modern-warfare.p.rapidapi.com/warzone-matches/{}/xbl".format(friend)
+            response_friends = requests.request('GET', url_friend, headers=headers)
+            history_stats_friends = response_friends.json()
+
+            avg_placement_friend = avg_placement(history_stats_friends)
+            best_placement_friend = best_placement(history_stats_friends)
+            most_kills_friend = most_kills(history_stats_friends)
+
+            stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends])
+            wz_stats_friends.append(stats_list_friends)
+            print(wz_stats_friends)
+        else:
+            continue
+        return render(request, 'mw_stats/history.html', {
+            'gamertag': gamertag,
+            'friends_list': friends_list,
+            'avg_placement_user': avg_placement_user,
+            'best_placement_user': best_placement_user,
+            'most_kills_user': most_kills_user,
+            'wz_stats_friends': wz_stats_friends
+        })
