@@ -1,0 +1,67 @@
+{% extends 'mw_stats/layout.html' %}
+
+{% block title %} Last 20 WZ Games {% endblock %}
+
+{% block links %}
+    <a class="nav-link" href="{% url 'warzone' %}">Warzone</a>
+    <a class="nav-link" href="{% url 'multiplayer' %}">Multiplayer</a>
+    <a class="nav-link" href="">Private</a>
+    <a class="nav-link" href="{% url 'history' %}" active>History</a>
+{% endblock %}
+
+
+{% block body %}
+    <main class="container p-5">
+        <h2>{{ gamertag }}'s last twenty matches</h2>
+        <p></p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>Avg Placement</th>
+                    <th>Best Placement</th>
+                    <th>Most Kills</th>
+                    <th>Total Kills</th>
+                    <th>Total Deaths</th>
+                    <th>K/D</th>
+                    <th>Kills/Game</th>
+                    <th>Gulag Kills</th>
+                    <th>Gulag Deaths</th>
+                    <th>Total Revives</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ gamertag }}</td>
+                    <td>{{ avg_placement_user }}</td>
+                    <td>{{ best_placement_user }}</td>
+                    <td>{{ most_kills_user }}</td>
+                    <td>{{ history_stats.summary.all.kills }}</td>
+                    <td>{{ history_stats.summary.all.deaths }}</td>
+                    <td>{{ kd }}</td>
+                    <td>{{ history_stats.summary.all.killsPerGame }}</td>
+                    <td>{{ history_stats.summary.all.gulagKills }}</td>
+                    <td>{{ history_stats.summary.all.gulagDeaths }}</td>
+                    <td>{{ history_stats.summary.all.objectiveReviver }}</td>
+                </tr>
+                {% for friend in wz_stats_friends %}
+                <tr>
+                    <td>{{ friend.0 }}</td>
+                    <td>{{ friend.1 }}</td>
+                    <td>{{ friend.2 }}</td>
+                    <td>{{ friend.3 }}</td>
+                    <td>{{ friend.4.summary.all.kills }}</td>
+                    <td>{{ friend.4.summary.all.deaths }}</td>
+                    <td>{{ friend.5 }}</td>
+                    <td>{{ friend.4.summary.all.killsPerGame }}</td>
+                    <td>{{ friend.4.summary.all.gulagKills }}</td>
+                    <td>{{ friend.4.summary.all.gulagDeaths }}</td>
+                    <td>{{friend.4.summary.all.objectiveReviver }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+        <a href="{% url 'friends' %}" class="btn btn-secondary">Compare with friends</a>
+    </main>
+
+{% endblock %}

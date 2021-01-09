@@ -1,10 +1,10 @@
 {% extends 'mw_stats/layout.html' %}
 
-{% block title %} Warzone {% endblock %}
+{% block title %} Multiplayer {% endblock %}
 
 {% block links %}
     <a class="nav-link" href="{% url 'warzone' %}" active>Warzone</a>
-    <a class="nav-link" href="{% url 'multiplayer' %}">Multiplayer</a>
+    <a class="nav-link" href="{% url 'multiplayer' %}" active>Multiplayer</a>
     <a class="nav-link" href="">Private</a>
     <a class="nav-link" href="{% url 'history' %}">History</a>
 {% endblock %}
@@ -12,45 +12,43 @@
 
 {% block body %}
     <main class="container p-5">
-        <h2>{{ gamertag }}'s Warzone Stats</h2>
+        <h2>{{ gamertag }}'s Mutliplayer Stats</h2>
         <p></p>
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
                     <th></th>
-                    <th>Win %</th>
-                    <th>Top 5 %</th>
-                    <th>Wins</th>
-                    <th>Top 5</th>
-                    <th>Top 10</th>
-                    <th>Top 25</th>
                     <th>Kills</th>
+                    <th>Killstreak</th>
                     <th>Deaths</th>
                     <th>K/D</th>
-                    <th>Revives</th>
-                    <th>Games Played</th>
+                    <th>Best K/D</th>
+                    <th>Assists</th>
+                    <th>Score/Game</th>
+                    <th>Score/Min</th>
+                    <th>Wins</th>
+                    <th>Win %</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ gamertag }}</td>
-                    <td>{{ win_percentage }}%</td>
-                    <td>{{ top5_percentage }}%</td>
-                    <td>{{ wins }}</td>
-                    <td>{{ top5 }}</td>
-                    <td>{{ top10 }}</td>
-                    <td>{{ top25 }}</td>
                     <td>{{ kills }}</td>
+                    <td>{{ killstreak }}</td>
                     <td>{{ deaths }}</td>
                     <td>{{ kd }}</td>
-                    <td>{{ revives }}</td>
-                    <td>{{ games_played }}</td>
+                    <td>{{ best_kd }}</td>
+                    <td>{{ assists }}</td>
+                    <td>{{ score_per_game }}</td>
+                    <td>{{ score_per_min }}</td>
+                    <td>{{ wins }}</td>
+                    <td>{{ win_perc }}%</td>
                 </tr>
-            {% for friend in wz_stats_F %}
+            {% for friend in mp_stats_F %}
                 <tr>
                     <td>{{ friend.0 }}</td>
-                    <td>{{ friend.1 }}%</td>
-                    <td>{{ friend.2 }}%</td>
+                    <td>{{ friend.1 }}</td>
+                    <td>{{ friend.2 }}</td>
                     <td>{{ friend.3 }}</td>
                     <td>{{ friend.4 }}</td>
                     <td>{{ friend.5 }}</td>
@@ -58,8 +56,7 @@
                     <td>{{ friend.7 }}</td>
                     <td>{{ friend.8 }}</td>
                     <td>{{ friend.9 }}</td>
-                    <td>{{ friend.10 }}</td>
-                    <td>{{ friend.11 }}</td>
+                    <td>{{ friend.10 }}%</td>
                 </tr>
             {% endfor %}
             </tbody>
