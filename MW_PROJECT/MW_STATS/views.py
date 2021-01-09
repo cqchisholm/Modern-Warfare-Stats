@@ -187,6 +187,94 @@ def warzone(request):
 
 
 @login_required
+def multiplayer(request):
+    # get the gamertag of the signed in user via the Profile
+    profile = Profile.objects.filter(user=request.user).first()
+    gamertag = profile.gamertag
+
+    # get the API response for warzone stats for the user
+    url_user = "https://call-of-duty-modern-warfare.p.rapidapi.com/multiplayer/{}/xbl".format(gamertag)
+    headers = {
+    'x-rapidapi-key': "206fdfeafcmsh70f2e07b4f4d6e0p136146jsn19dcf2a2f09e",
+    'x-rapidapi-host': "call-of-duty-modern-warfare.p.rapidapi.com"
+    }
+    # Response for user
+    response_user = requests.request('GET', url_user, headers=headers)
+    mp_stats = response_user.json()
+
+    # all warzone stats
+    kills = add_commas(mp_stats['lifetime']['all']['properties']['kills'])
+    killstreak = mp_stats['lifetime']['all']['properties']['recordKillStreak']
+    deaths = add_commas(mp_stats['lifetime']['all']['properties']['deaths'])
+    kd = round(mp_stats['lifetime']['all']['properties']['kdRatio'], 3)
+    best_kd = round(mp_stats['lifetime']['all']['properties']['bestKD'], 3)
+    assists = add_commas(mp_stats['lifetime']['all']['properties']['assists'])
+    score_per_game = add_commas(round(mp_stats['lifetime']['all']['properties']['scorePerGame'], 2))
+    score_per_min = add_commas(round(mp_stats['lifetime']['all']['properties']['scorePerMinute'], 2))
+    wins = add_commas(mp_stats['lifetime']['all']['properties']['wins'])
+    win_perc = round(mp_stats['lifetime']['all']['properties']['winLossRatio'], 3) * 100
+    sleep(1)
+
+    #############################################################################
+    # All same info above but for all friends added for that user to compare with
+    friends = Friends.objects.filter(user=request.user).first()
+    friends_list = [friends.gamertag1, friends.gamertag2, friends.gamertag3, friends.gamertag4, friends.gamertag5]
+    # get the API response for warzone stats for the friends of the user
+    mp_stats_F = []
+    for friend in friends_list:
+        stats_list =[]
+        # if there is a gamertag than get the stats, otherwise continue
+        if friend != '':
+            url_friends = "https://call-of-duty-modern-warfare.p.rapidapi.com/multiplayer/{}/xbl".format(friend)
+            headers = {
+            'x-rapidapi-key': "206fdfeafcmsh70f2e07b4f4d6e0p136146jsn19dcf2a2f09e",
+            'x-rapidapi-host': "call-of-duty-modern-warfare.p.rapidapi.com"
+            }
+
+            # response for the friends - already have headers from above
+            response_friends = requests.request('GET', url_friends, headers=headers)
+            mp_stats_friends = response_friends.json()
+
+            # all warzone stats for friends
+            kills_f = add_commas(mp_stats_friends['lifetime']['all']['properties']['kills'])
+            killstreak_f = mp_stats_friends['lifetime']['all']['properties']['recordKillStreak']
+            deaths_f = add_commas(mp_stats_friends['lifetime']['all']['properties']['deaths'])
+            kd_f = round(mp_stats_friends['lifetime']['all']['properties']['kdRatio'], 3)
+            best_kd_f = round(mp_stats_friends['lifetime']['all']['properties']['bestKD'], 3)
+            assists_f = add_commas(mp_stats_friends['lifetime']['all']['properties']['assists'])
+            score_per_game_f = add_commas(round(mp_stats_friends['lifetime']['all']['properties']['scorePerGame'], 2))
+            score_per_min_f = add_commas(round(mp_stats_friends['lifetime']['all']['properties']['scorePerMinute'], 2))
+            wins_f = add_commas(mp_stats_friends['lifetime']['all']['properties']['wins'])
+            win_perc_f = round(mp_stats_friends['lifetime']['all']['properties']['winLossRatio'], 3) * 100
+
+            # gather into a list
+            stats_list.extend([
+                friend, kills_f, killstreak_f, deaths_f,
+                kd_f, best_kd_f, assists_f, score_per_game_f,
+                score_per_min_f, wins_f, win_perc_f
+                ]
+            )
+            mp_stats_F.append(stats_list)
+            sleep(1) # Sleep for 1 second to avoid API calls/sec error
+        else:
+            continue
+    return render(request, 'mw_stats/multiplayer.html', {
+        'gamertag': gamertag,
+        'kills': kills,
+        'killstreak': killstreak,
+        'deaths': deaths,
+        'kd': kd,
+        'best_kd': best_kd,
+        'assists': assists,
+        'score_per_game': score_per_game,
+        'score_per_min': score_per_min,
+        'wins': wins,
+        'win_perc': win_perc,
+        'mp_stats_F': mp_stats_F
+    })
+
+
+@login_required
 def friends(request):
     if request.method == 'POST':
         form = FriendsForm(request.POST)
@@ -239,6 +327,7 @@ def history(request):
     best_placement_user = best_placement(history_stats)
     most_kills_user = most_kills(history_stats)
 
+    #############################################################################
     # get list of friends of the user
     friends = Friends.objects.filter(user=request.user).first()
     friends_list = [friends.gamertag1, friends.gamertag2, friends.gamertag3, friends.gamertag4, friends.gamertag5]
@@ -256,7 +345,6 @@ def history(request):
             best_placement_friend = best_placement(history_stats_friends)
             most_kills_friend = most_kills(history_stats_friends)
             kd = round(history_stats_friends['summary']['all']['kdRatio'], 3)
-            kills_per_game = (history_stats_friends['summary']['all']['kills'] / 20)
 
             stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends, kd])
             wz_stats_friends.append(stats_list_friends)

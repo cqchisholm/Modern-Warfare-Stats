@@ -1,10 +1,10 @@
 {% extends 'mw_stats/layout.html' %}
 
-{% block title %} History {% endblock %}
+{% block title %} Last 20 WZ Games {% endblock %}
 
 {% block links %}
     <a class="nav-link" href="{% url 'warzone' %}">Warzone</a>
-    <a class="nav-link" href="">Multiplayer</a>
+    <a class="nav-link" href="{% url 'multiplayer' %}">Multiplayer</a>
     <a class="nav-link" href="">Private</a>
     <a class="nav-link" href="{% url 'history' %}" active>History</a>
 {% endblock %}
