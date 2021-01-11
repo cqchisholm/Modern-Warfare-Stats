@@ -344,9 +344,9 @@ def history(request):
             avg_placement_friend = avg_placement(history_stats_friends)
             best_placement_friend = best_placement(history_stats_friends)
             most_kills_friend = most_kills(history_stats_friends)
-            kd = round(history_stats_friends['summary']['all']['kdRatio'], 3)
+            kd_friend = round(history_stats_friends['summary']['all']['kdRatio'], 3)
 
-            stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends, kd])
+            stats_list_friends.extend([friend, avg_placement_friend, best_placement_friend, most_kills_friend, history_stats_friends, kd_friend])
             wz_stats_friends.append(stats_list_friends)
         else:
             continue
