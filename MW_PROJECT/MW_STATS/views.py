@@ -105,15 +105,16 @@ def warzone(request):
     wz_stats = response_user.json()
 
     # all warzone stats
-    kd = round(wz_stats['br']['kdRatio'], 3)
+    kd = '{:.2f}'.format(round(wz_stats['br']['kdRatio'], 3))
     downs = add_commas(wz_stats['br']['downs'])
-    top25 = add_commas(wz_stats['br']['topTwentyFive'])
+    downs_per_game = '{:.2f}'.format(round(wz_stats['br']['downs'] / wz_stats['br']['gamesPlayed'], 2))
     kills = add_commas(wz_stats['br']['kills'])
+    kills_per_game = '{:.2f}'.format(round(wz_stats['br']['kills'] / wz_stats['br']['gamesPlayed'], 2))
     deaths = add_commas(wz_stats['br']['deaths'])
     games_played = add_commas(wz_stats['br']['gamesPlayed'])
     wins = add_commas(wz_stats['br']['wins'])
-    win_percentage = round(wz_stats['br']['wins'] / wz_stats['br']['gamesPlayed'] * 100, 2)
-    top5_percentage = round(wz_stats['br']['topFive'] / wz_stats['br']['gamesPlayed'] * 100, 2)
+    win_percentage = '{:.2f}'.format(round(wz_stats['br']['wins'] / wz_stats['br']['gamesPlayed'] * 100, 2))
+    top5_percentage = '{:.2f}'.format(round(wz_stats['br']['topFive'] / wz_stats['br']['gamesPlayed'] * 100, 2))
     top5 = add_commas(wz_stats['br']['topFive'])
     top10 = add_commas(wz_stats['br']['topTen'])
     top25 = add_commas(wz_stats['br']['topTwentyFive'])
@@ -141,25 +142,25 @@ def warzone(request):
             wz_stats_friends = response_friends.json()
 
             # all warzone stats for friends
-            kd_f = round(wz_stats_friends['br']['kdRatio'], 3)
+            kd_f = '{:.2f}'.format(round(wz_stats_friends['br']['kdRatio'], 3))
             downs_f = add_commas(wz_stats_friends['br']['downs'])
-            top25_f = add_commas(wz_stats_friends['br']['topTwentyFive'])
+            downs_per_game_f = '{:.2f}'.format(round(wz_stats_friends['br']['downs'] / wz_stats_friends['br']['gamesPlayed'], 2))
             kills_f = add_commas(wz_stats_friends['br']['kills'])
+            kills_per_game_f = '{:.2f}'.format(round(wz_stats_friends['br']['kills'] / wz_stats_friends['br']['gamesPlayed'], 2))
             deaths_f = add_commas(wz_stats_friends['br']['deaths'])
             games_played_f = add_commas(wz_stats_friends['br']['gamesPlayed'])
             wins_f = add_commas(wz_stats_friends['br']['wins'])
-            win_percentage_f = round(wz_stats_friends['br']['wins'] / wz_stats['br']['gamesPlayed'] * 100, 2)
-            top5_percentage_f = round(wz_stats_friends['br']['topFive'] / wz_stats['br']['gamesPlayed'] * 100, 2)
+            win_percentage_f = '{:.2f}'.format(round(wz_stats_friends['br']['wins'] / wz_stats_friends['br']['gamesPlayed'] * 100, 2))
+            top5_percentage_f = '{:.2f}'.format(round(wz_stats_friends['br']['topFive'] / wz_stats_friends['br']['gamesPlayed'] * 100, 2))
             top5_f = add_commas(wz_stats_friends['br']['topFive'])
             top10_f = add_commas(wz_stats_friends['br']['topTen'])
-            top25_f = add_commas(wz_stats_friends['br']['topTwentyFive'])
             revives_f = add_commas(wz_stats_friends['br']['revives'])
 
             # gather into a list
             stats_list.extend([
                 friend, win_percentage_f, top5_percentage_f, 
-                wins_f, top5_f, top10_f, top25_f, kills_f,
-                deaths_f, kd_f, revives_f, games_played_f
+                wins_f, top5_f, top10_f, kills_f,
+                deaths_f, kd_f, downs_f, downs_per_game_f, kills_per_game_f, revives_f, games_played_f
                 ]
             )
             wz_stats_F.append(stats_list)
@@ -171,8 +172,9 @@ def warzone(request):
         'gamertag': gamertag,
         'kd': kd,
         'downs': downs,
+        'downs_per_game': downs_per_game,
+        'kills_per_game': kills_per_game,
         'wins': wins,
-        'top25': top25,
         'kills': kills,
         'deaths': deaths,
         'games_played': games_played,
@@ -361,3 +363,8 @@ def history(request):
         'kd': kd,
         'wz_stats_friends': wz_stats_friends
     })
+
+
+@login_required
+def private(request):
+    return render(request, 'mw_stats/private.html')

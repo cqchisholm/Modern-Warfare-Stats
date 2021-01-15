@@ -10,5 +10,6 @@ urlpatterns = [
     path('warzone', views.warzone, name='warzone'),
     path('multiplayer', views.multiplayer, name='multiplayer'),
     path('friends', views.friends, name='friends'),
-    path('history', views.history, name='history')
+    path('history', views.history, name='history'),
+    path('private', views.private, name='private')
 ]

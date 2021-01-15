@@ -1,0 +1,79 @@
+{% extends 'mw_stats/layout.html' %}
+
+{% block title %} Private Matches {% endblock %}
+
+{% block links %}
+    <a class="nav-link" href="{% url 'warzone' %}" active>Warzone</a>
+    <a class="nav-link" href="{% url 'multiplayer' %}">Multiplayer</a>
+    <a class="nav-link" href="{% url 'private' %}">Private</a>
+    <a class="nav-link" href="{% url 'history' %}">History</a>
+{% endblock %}
+
+
+{% block body %}
+    <main class="container p-5">
+        <h2>Custom Match Scoreboard</h2>
+        <p></p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>1st Place</th>
+                    <th>2nd Place</th>
+                    <th>3rd Place</th>
+                    <th>Point Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alex</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Colin</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Trace</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row justify-content-md-center">
+            <div class="col-3">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Who's best?</option>
+                <option value="1">Alex</option>
+                <option value="2">Colin</option>
+                <option value="3">Trace</option>
+                </select>
+            </div>
+            <div class="col-3">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Who's average?</option>
+                <option value="1">Alex</option>
+                <option value="2">Colin</option>
+                <option value="3">Trace</option>
+                </select>
+            </div>
+            <div class="col-3">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Who got humbled?</option>
+                <option value="1">Alex</option>
+                <option value="2">Colin</option>
+                <option value="3">Trace</option>
+                </select>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -5,7 +5,7 @@
 {% block links %}
     <a class="nav-link" href="{% url 'warzone' %}" active>Warzone</a>
     <a class="nav-link" href="{% url 'multiplayer' %}">Multiplayer</a>
-    <a class="nav-link" href="">Private</a>
+    <a class="nav-link" href="{% url 'private' %}">Private</a>
     <a class="nav-link" href="{% url 'history' %}">History</a>
 {% endblock %}
 
@@ -23,10 +23,12 @@
                     <th>Wins</th>
                     <th>Top 5</th>
                     <th>Top 10</th>
-                    <th>Top 25</th>
                     <th>Kills</th>
                     <th>Deaths</th>
                     <th>K/D</th>
+                    <th>Downs</th>
+                    <th>Downs/Game</th>
+                    <th>Kills/Game</th>
                     <th>Revives</th>
                     <th>Games Played</th>
                 </tr>
@@ -39,10 +41,12 @@
                     <td>{{ wins }}</td>
                     <td>{{ top5 }}</td>
                     <td>{{ top10 }}</td>
-                    <td>{{ top25 }}</td>
                     <td>{{ kills }}</td>
                     <td>{{ deaths }}</td>
                     <td>{{ kd }}</td>
+                    <td>{{ downs }}</td>
+                    <td>{{ downs_per_game }}</td>
+                    <td>{{ kills_per_game }}</td>
                     <td>{{ revives }}</td>
                     <td>{{ games_played }}</td>
                 </tr>
@@ -60,6 +64,8 @@
                     <td>{{ friend.9 }}</td>
                     <td>{{ friend.10 }}</td>
                     <td>{{ friend.11 }}</td>
+                    <td>{{ friend.12 }}</td>
+                    <td>{{ friend.13 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
