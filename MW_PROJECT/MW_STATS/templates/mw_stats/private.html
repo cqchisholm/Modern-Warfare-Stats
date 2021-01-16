@@ -27,53 +27,59 @@
             <tbody>
                 <tr>
                     <td>Alex</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ a_scores.first }}</td>
+                    <td>{{ alex_scores.1 }}</td>
+                    <td>{{ alex_scores.2 }}</td>
+                    <td>{{ alex_scores.3 }}</td>
                 </tr>
                 <tr>
                     <td>Colin</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ colin_scores.0 }}</td>
+                    <td>{{ colin_scores.1 }}</td>
+                    <td>{{ colin_scores.2 }}</td>
+                    <td>{{ colin_scores.3 }}</td>
                 </tr>
                 <tr>
                     <td>Trace</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ trace_scores.0 }}</td>
+                    <td>{{ trace_scores.1 }}</td>
+                    <td>{{ trace_scores.2 }}</td>
+                    <td>{{ trace_scores.3 }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="row justify-content-md-center">
-            <div class="col-3">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Who's best?</option>
-                <option value="1">Alex</option>
-                <option value="2">Colin</option>
-                <option value="3">Trace</option>
-                </select>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                <select class="form-select" name="first">
+                    <option selected>Who's best?</option>
+                    <option value="alex">Alex</option>
+                    <option value="colin">Colin</option>
+                    <option value="trace">Trace</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                <select class="form-select" name="second">
+                    <option selected>Who's average?</option>
+                    <option value="alex">Alex</option>
+                    <option value="colin">Colin</option>
+                    <option value="trace">Trace</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                <select class="form-select" name="third">
+                    <option selected>Who got humbled?</option>
+                    <option value="alex">Alex</option>
+                    <option value="colin">Colin</option>
+                    <option value="trace">Trace</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-            <div class="col-3">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Who's average?</option>
-                <option value="1">Alex</option>
-                <option value="2">Colin</option>
-                <option value="3">Trace</option>
-                </select>
-            </div>
-            <div class="col-3">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Who got humbled?</option>
-                <option value="1">Alex</option>
-                <option value="2">Colin</option>
-                <option value="3">Trace</option>
-                </select>
-            </div>
-        </div>
+        </form>
     </main>
 {% endblock %}

@@ -16,3 +16,15 @@ class Friends(models.Model):
     gamertag3 = models.CharField(max_length=30, blank=True)
     gamertag4 = models.CharField(max_length=30, blank=True)
     gamertag5 = models.CharField(max_length=30, blank=True)
+
+
+class PrivateUsers(models.Model):
+    name = models.CharField(max_length=10)
+
+
+class Score(models.Model):
+    name = models.ForeignKey(PrivateUsers, on_delete=CASCADE)
+    first = models.IntegerField(default=0)
+    second = models.IntegerField(default=0)
+    third = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
