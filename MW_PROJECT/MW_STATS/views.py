@@ -367,20 +367,75 @@ def history(request):
 
 @login_required
 def private(request):
-    alex_scores = Score.objects.filter(id=1).first()
-    colin_scores = Score.objects.filter(id=2).first()
-    trace_scores = Score.objects.filter(id=3).first()
+    alex_scores = Score.objects.get(id=1)
+    colin_scores = Score.objects.get(id=2)
+    trace_scores = Score.objects.get(id=3)
 
 
     if request.method == 'POST':
         first = request.POST['first']
         second = request.POST['second']
-        third = request.POST['third']
-        
-        
 
+        # update scores based on who got first, second, third
+        if first == 'alex':
+            alex_scores.first += 1
+            alex_scores.total += 2
+            alex_scores.save()
+            if second == 'colin':
+                colin_scores.second += 1
+                colin_scores.total += 1
+                colin_scores.save()
+                trace_scores.third += 1
+                trace_scores.save()
+            else:
+                trace_scores.second += 1
+                trace_scores.total += 1
+                trace_scores.save()
+                colin_scores.third += 1
+                colin_scores.save()
+        elif first == 'colin':
+            colin_scores.first += 1
+            colin_scores.total += 2
+            colin_scores.save()
+            if second == 'alex':
+                alex_scores.second += 1
+                alex_scores.total += 1
+                alex_scores.save()
+                trace_scores.third += 1
+                trace_scores.save()
+            else:
+                trace_scores.second += 1
+                trace_scores.total += 1
+                trace_scores.save()
+                alex_scores.third += 1
+                alex_scores.save()
+        else:
+            trace_scores.first += 1
+            trace_scores.total += 2
+            trace_scores.save()
+            if second == 'alex':
+                alex_scores.second += 1
+                alex_scores.total += 1
+                alex_scores.save()
+                trace_scores.third += 1
+                trace_scores.save()
+            else:
+                colin_scores.second += 1
+                colin_scores.total += 1
+                colin_scores.save()
+                alex_scores.third += 1
+                alex_scores.save()
 
-        return render(request, 'mw_stats/private.html')
+        # get updated stats back from the database
+        alex_scores = Score.objects.get(id=1)
+        colin_scores = Score.objects.get(id=2)
+        trace_scores = Score.objects.get(id=3)
+
+        return render(request, 'mw_stats/private.html', {
+            'alex_scores': alex_scores,
+            'colin_scores': colin_scores,
+            'trace_scores': trace_scores
+        })
 
     else:
         return render(request, 'mw_stats/private.html', {
