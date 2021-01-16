@@ -367,12 +367,9 @@ def history(request):
 
 @login_required
 def private(request):
-    a_scores = Score.objects.filter(id=1).first()
-    alex_scores = [a_scores.first, a_scores.second, a_scores.third, a_scores.total]
-    c_scores = Score.objects.filter(id=2).first()
-    colin_scores = [c_scores.first, c_scores.second, c_scores.third, c_scores.total]
-    t_scores = Score.objects.filter(id=3).first()
-    trace_scores = [t_scores.first, t_scores.second, t_scores.third, t_scores.total]
+    alex_scores = Score.objects.filter(id=1).first()
+    colin_scores = Score.objects.filter(id=2).first()
+    trace_scores = Score.objects.filter(id=3).first()
 
 
     if request.method == 'POST':
@@ -380,14 +377,13 @@ def private(request):
         second = request.POST['second']
         third = request.POST['third']
         
-
+        
 
 
         return render(request, 'mw_stats/private.html')
 
     else:
         return render(request, 'mw_stats/private.html', {
-            'a_scores': a_scores,
             'alex_scores': alex_scores,
             'colin_scores': colin_scores,
             'trace_scores': trace_scores
