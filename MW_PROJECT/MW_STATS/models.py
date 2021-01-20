@@ -28,3 +28,4 @@ class Score(models.Model):
     second = models.IntegerField(default=0)
     third = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
+
