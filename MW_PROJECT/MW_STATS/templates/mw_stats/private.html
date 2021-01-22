@@ -101,18 +101,18 @@
                     <tbody>
                         <tr>
                             <th scope="row">Leader</th>
-                            <td>Alex</td>
-                            <td>{{ alex_private.all_time_score }}</td>
+                            <td>{{ sorted_list.0.0 }}</td>
+                            <td>{{ sorted_list.0.1 }}</td>
                         </tr>
                         <tr>
                             <th scope="row">2nd Place</th>
-                            <td>Colin</td>
-                            <td>{{ colin_private.all_time_score }}</td>
+                            <td>{{ sorted_list.1.0 }}</td>
+                            <td>{{ sorted_list.1.1 }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Last Place</th>
-                            <td>Trace</td>
-                            <td>{{ trace_private.all_time_score }}</td>
+                            <td>{{ sorted_list.2.0 }}</td>
+                            <td>{{ sorted_list.2.1 }}</td>
                         </tr>
                     </tbody>
                 </table>

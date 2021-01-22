@@ -1,3 +1,5 @@
+from .models import PrivateUsers
+
 # Helper functions for the rest of the app
 
 def add_commas(number):
@@ -33,3 +35,16 @@ def most_kills(json):
         if kills > most:
             most = kills
     return most
+
+
+def sorted_friends_list():
+    alex_private = PrivateUsers.objects.get(id=1)
+    colin_private = PrivateUsers.objects.get(id=2)
+    trace_private = PrivateUsers.objects.get(id=3)
+    player_list = [
+        ('Alex', alex_private.all_time_score),
+        ('Colin', colin_private.all_time_score),
+        ('Trace', trace_private.all_time_score)
+    ]
+    sorted_list = sorted(player_list, key=lambda x: x[1], reverse=True)
+    return sorted_list

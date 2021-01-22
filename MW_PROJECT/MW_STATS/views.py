@@ -434,7 +434,8 @@ def private(request):
                 'trace_scores': Score.objects.get(id=3),
                 'alex_private': PrivateUsers.objects.get(id=1),
                 'colin_private': PrivateUsers.objects.get(id=2),
-                'trace_private': PrivateUsers.objects.get(id=3)
+                'trace_private': PrivateUsers.objects.get(id=3),
+                'sorted_list': sorted_friends_list
             })
         # Submit button for all time score
         elif 'alltime' in request.POST:
@@ -464,21 +465,11 @@ def private(request):
                 'trace_scores': Score.objects.get(id=3),
                 'alex_private': PrivateUsers.objects.get(id=1),
                 'colin_private': PrivateUsers.objects.get(id=2),
-                'trace_private': PrivateUsers.objects.get(id=3)
+                'trace_private': PrivateUsers.objects.get(id=3),
+                'sorted_list': sorted_friends_list
             })
     # if request.method == GET
     else:
-        alex_private = PrivateUsers.objects.get(id=1)
-        colin_private = PrivateUsers.objects.get(id=2)
-        trace_private = PrivateUsers.objects.get(id=3)
-        player_list = [
-            ('Alex', alex_private.all_time_score),
-            ('Colin', colin_private.all_time_score),
-            ('Trace', trace_private.all_time_score)
-        ]
-        sorted_list = sorted(player_list, key=lambda x: x[1], reverse=True)
-        print(sorted_list)
-
         return render(request, 'mw_stats/private.html', {
             'alex_scores': Score.objects.get(id=1),
             'colin_scores': Score.objects.get(id=2),
@@ -486,5 +477,5 @@ def private(request):
             'alex_private': PrivateUsers.objects.get(id=1),
             'colin_private': PrivateUsers.objects.get(id=2),
             'trace_private': PrivateUsers.objects.get(id=3),
-            'sorted_list': sorted_list
+            'sorted_list': sorted_friends_list
         })
