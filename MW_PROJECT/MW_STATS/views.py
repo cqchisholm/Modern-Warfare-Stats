@@ -458,9 +458,6 @@ def private(request):
             trace_private.save()
             Score.objects.filter(id=3).update(first=0, second=0, third=0, total=0)
 
-            # get the zeroed out scores
-
-
             return render(request, 'mw_stats/private.html', {
                 'alex_scores': Score.objects.get(id=1),
                 'colin_scores': Score.objects.get(id=2),
@@ -471,11 +468,23 @@ def private(request):
             })
     # if request.method == GET
     else:
+        alex_private = PrivateUsers.objects.get(id=1)
+        colin_private = PrivateUsers.objects.get(id=2)
+        trace_private = PrivateUsers.objects.get(id=3)
+        player_list = [
+            ('Alex', alex_private.all_time_score),
+            ('Colin', colin_private.all_time_score),
+            ('Trace', trace_private.all_time_score)
+        ]
+        sorted_list = sorted(player_list, key=lambda x: x[1], reverse=True)
+        print(sorted_list)
+
         return render(request, 'mw_stats/private.html', {
             'alex_scores': Score.objects.get(id=1),
             'colin_scores': Score.objects.get(id=2),
             'trace_scores': Score.objects.get(id=3),
             'alex_private': PrivateUsers.objects.get(id=1),
             'colin_private': PrivateUsers.objects.get(id=2),
-            'trace_private': PrivateUsers.objects.get(id=3)
+            'trace_private': PrivateUsers.objects.get(id=3),
+            'sorted_list': sorted_list
         })
