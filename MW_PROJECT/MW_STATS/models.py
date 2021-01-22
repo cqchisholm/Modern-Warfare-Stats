@@ -20,6 +20,7 @@ class Friends(models.Model):
 
 class PrivateUsers(models.Model):
     name = models.CharField(max_length=10)
+    all_time_score = models.IntegerField(default=0)
 
 
 class Score(models.Model):
@@ -28,4 +29,3 @@ class Score(models.Model):
     second = models.IntegerField(default=0)
     third = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
-
