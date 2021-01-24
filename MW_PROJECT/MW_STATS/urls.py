@@ -7,6 +7,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('login_user', views.login_user, name='login_user'),
     path('logout_user', views.logout_user, name='logout_user'),
+    path('change_password', views.change_password, name='change_password'),
     path('warzone', views.warzone, name='warzone'),
     path('multiplayer', views.multiplayer, name='multiplayer'),
     path('friends', views.friends, name='friends'),

@@ -1,8 +1,10 @@
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
 import requests
 from .helpers import *
 from .forms import LoginForm, RegisterForm, FriendsForm
@@ -88,6 +90,24 @@ def logout_user(request):
     return HttpResponseRedirect(reverse('index'))
 
 
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    # if request.method == 'GET'
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'mw_stats/change_password.html', {
+        'form': form
+    })
+
+
 @login_required
 def warzone(request):
     # get the gamertag of the signed in user via the Profile
@@ -123,6 +143,13 @@ def warzone(request):
 
     #############################################################################
     # All same info above but for all friends added for that user to compare with
+    Friends.objects.get_or_create(user=request.user, defaults={
+        'gamertag1': '',
+        'gamertag2': '',
+        'gamertag3': '',
+        'gamertag4': '',
+        'gamertag5': ''
+    })
     friends = Friends.objects.filter(user=request.user).first()
     friends_list = [friends.gamertag1, friends.gamertag2, friends.gamertag3, friends.gamertag4, friends.gamertag5]
     # get the API response for warzone stats for the friends of the user
@@ -219,6 +246,13 @@ def multiplayer(request):
 
     #############################################################################
     # All same info above but for all friends added for that user to compare with
+    Friends.objects.get_or_create(user=request.user, defaults={
+        'gamertag1': '',
+        'gamertag2': '',
+        'gamertag3': '',
+        'gamertag4': '',
+        'gamertag5': ''
+    })
     friends = Friends.objects.filter(user=request.user).first()
     friends_list = [friends.gamertag1, friends.gamertag2, friends.gamertag3, friends.gamertag4, friends.gamertag5]
     # get the API response for warzone stats for the friends of the user
@@ -291,7 +325,7 @@ def friends(request):
                     'gamertag5': form.cleaned_data['gamertag5']
                 }
             )
-            return HttpResponseRedirect(reverse('warzone'))
+            return HttpResponseRedirect(reverse('index'))
         else:
             return render(request, 'mw_stats/friends.html', {
                 'form': FriendsForm(),

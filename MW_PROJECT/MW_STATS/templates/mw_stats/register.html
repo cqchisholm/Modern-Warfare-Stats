@@ -19,10 +19,9 @@
     {% if message %}
         {{ message }}
     {% endif %}
-    
-    <div class="col-md-6 offset-md-3">
-        <h4 class="padding">Register to start tracking your stats!</h4>
+    <h4 class="padding text-center">Register to start tracking your stats!</h4>
 
+    <div class="col-3 mx-auto">
         <form method='POST'>
             {% csrf_token %}
             <div class="form-divide">{{ form.gamertag|as_crispy_field }}</div>

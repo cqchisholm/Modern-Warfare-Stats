@@ -19,9 +19,10 @@
     {% if message %}
         {{ message }}
     {% endif %}
-    
-    <div class="col-md-6 offset-md-3">
-        <h4 class="padding">Login to view stats.</h4>
+
+    <h4 class="padding text-center">Login to view stats.</h4>
+
+    <div class="col-3 mx-auto">
 
         <form method='POST'>
             {% csrf_token %}
