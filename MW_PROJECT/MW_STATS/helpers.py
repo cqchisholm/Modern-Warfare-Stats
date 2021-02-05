@@ -14,7 +14,6 @@ def avg_placement(json):
     total_placement_friends = 0
     for i in range(20):
         placement = json['matches'][i]['playerStats']['teamPlacement']
-        print(placement)
         total_placement_friends += placement
     placement = round(total_placement_friends / 20)
     return placement
