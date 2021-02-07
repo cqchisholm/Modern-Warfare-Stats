@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,14 +25,10 @@ SECRET_KEY = '@^%e=*b7f@=k(ca!^_@*j+)qdpq+c-*c40t(a(tqdfs4a3sw6s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'https://pure-atoll-76073.herokuapp.com/']
+ALLOWED_HOSTS = []
 
 # Crispy template pack
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# added STATIC_ROOT so I can push to Heroku
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 # Application definition
 
