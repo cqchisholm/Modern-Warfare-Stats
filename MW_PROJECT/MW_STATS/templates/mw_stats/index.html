@@ -15,6 +15,9 @@
 
 
 {% block body %}
+    {% if message %}
+        {{ message }}
+    {% endif %}
 
     {% if user.is_authenticated %}
         <p class="fw-light fs-4 text-center">Signed in as <strong>{{ gamertag }}</strong></p>

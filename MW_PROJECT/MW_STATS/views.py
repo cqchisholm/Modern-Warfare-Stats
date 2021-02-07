@@ -34,6 +34,10 @@ def register(request):
             user.save()
             profile = Profile(user=user, gamertag=gamertag)
             profile.save()
+            # add an attached friends model
+            friends = Friends(user=user)
+            friends.save()
+
             # Authenticate the user
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -45,7 +49,8 @@ def register(request):
                 })
             return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, 'mw_stats/index.html', {
+            print(form.errors)
+            return render(request, 'mw_stats/register.html', {
                 'form': RegisterForm(),
                 'message': 'The form was not filled out correctly. CHANGE THIS MESSAGE.'
             })

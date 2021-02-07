@@ -11,11 +11,11 @@ class Profile(models.Model):
 
 class Friends(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE)
-    gamertag1 = models.CharField(max_length=30, blank=True)
-    gamertag2 = models.CharField(max_length=30, blank=True)
-    gamertag3 = models.CharField(max_length=30, blank=True)
-    gamertag4 = models.CharField(max_length=30, blank=True)
-    gamertag5 = models.CharField(max_length=30, blank=True)
+    gamertag1 = models.CharField(max_length=30, default='', blank=True)
+    gamertag2 = models.CharField(max_length=30, default='', blank=True)
+    gamertag3 = models.CharField(max_length=30, default='', blank=True)
+    gamertag4 = models.CharField(max_length=30, default='', blank=True)
+    gamertag5 = models.CharField(max_length=30, default='', blank=True)
 
 
 class PrivateUsers(models.Model):

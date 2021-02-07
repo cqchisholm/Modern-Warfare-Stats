@@ -5,7 +5,7 @@
 {% block links %}
     <a class="nav-link" href="{% url 'warzone' %}" active>Warzone</a>
     <a class="nav-link" href="{% url 'multiplayer' %}" active>Multiplayer</a>
-    <a class="nav-link" href="">Private</a>
+    <a class="nav-link" href="{% url 'private' %}">Private</a>
     <a class="nav-link" href="{% url 'history' %}">History</a>
 {% endblock %}
 
